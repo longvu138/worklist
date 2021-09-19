@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import 'semantic-ui-css/semantic.min.css';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+
+// class này chỉ sử dụng trong index.js
+class Root extends Component {
+  render() {
+    return (
+      <>
+        <Switch>
+          {/* Root hiển thị nội dung App */}
+          <Route exact path='/' component={App} ></Route>
+          <Route  path='/login' component={Login} ></Route>
+          <Route  path='/register' component={Register} ></Route>
+        </Switch>
+      </>
+    )
+  }
+}
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Root />
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
