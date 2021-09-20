@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './components/App';
-import reportWebVitals from './reportWebVitals';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import 'semantic-ui-css/semantic.min.css';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
-
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./components/App";
+import reportWebVitals from "./reportWebVitals";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
+import "semantic-ui-css/semantic.min.css";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 // class này chỉ sử dụng trong index.js
 class Root extends Component {
   render() {
@@ -15,21 +16,22 @@ class Root extends Component {
       <>
         <Switch>
           {/* Root hiển thị nội dung App */}
-          <Route exact path='/' component={App} ></Route>
-          <Route  path='/login' component={Login} ></Route>
-          <Route  path='/register' component={Register} ></Route>
+          <Route exact path="/" component={App}></Route>
+          <Route path="/login" component={Login}></Route>
+          <Route path="/register" component={Register}></Route>
         </Switch>
       </>
-    )
+    );
   }
 }
 
-
 ReactDOM.render(
-  <BrowserRouter>
-    <Root />
-  </BrowserRouter>,
-  document.getElementById('root')
+  <Provider store={store}>
+    <BrowserRouter>
+      <Root />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

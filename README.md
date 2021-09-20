@@ -20,3 +20,7 @@ npm i redux-logger
 
 ### create firebase
 ### config router
+### install package calendar
+```
+npm i semantic-ui-calendar-react
+```
