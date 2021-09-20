@@ -11,13 +11,7 @@ import {
 } from "semantic-ui-react";
 
 class Home extends Component {
-  state = {
-    date: "",
-  };
-
-  handleWorkDateChange = (event, { name, value }) => {
-    console.log(value);
-  };
+ 
 
   render() {
     return (
