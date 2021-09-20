@@ -110,8 +110,7 @@ class Register extends Component {
   };
 
   render() {
-    const { username, password, email, passwordConfirmation, loading } =
-      this.state;
+    const { loading } = this.state;
     return (
       <div>
         <Grid textAlign="center" verticalAlign="middle" className="app">
