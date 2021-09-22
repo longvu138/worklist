@@ -4,7 +4,7 @@ import workdateReducer from "./workdates/workdateReducer";
 
 const rootReducer = combineReducers({
   users: userReducer,
-  workdates: workdateReducer,
+  workDates: workdateReducer,
 });
 
 export default rootReducer;
