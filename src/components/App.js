@@ -19,7 +19,7 @@ class App extends Component {
   };
 
   render() {
-    const { workDate, workDateData, refreshWordDateDataId } = this.props;
+    const { workDate, workDateData, refreshWorkDateDataId } = this.props;
     return (
       <Grid stretched stackable style={{ background: "#eee" }}>
         <Grid.Column width="4">
@@ -37,8 +37,9 @@ class App extends Component {
               <Grid.Row>
                 {this.props.workDateData ? (
                   <ContentPane
-                    key={`${workDateData.id}${refreshWordDateDataId}`}
-                    workDateId= {workDateData.id}
+                    key={`${workDateData.id}${refreshWorkDateDataId}`}
+                    workDateId={workDateData.id}
+                    workDate={workDate}
                   />
                 ) : (
                   <EmptyContentMessage key={workDate} workDate={workDate} />
@@ -55,10 +56,11 @@ class App extends Component {
 // kết nối tới redux store
 const mapStateToProps = ({
   users: { loading },
-  workDates: { workDate, workDateData },
+  workDates: { workDate, workDateData, refreshWorkDateDataId },
 }) => ({
   workDate: workDate,
   workDateData,
+  refreshWorkDateDataId,
 });
 
 const mapDispatchToProps = (dispatch) => ({

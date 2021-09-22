@@ -4,6 +4,7 @@ import { DonePane } from "./DonePane";
 import ToDoPane from "./ToDoPane";
 import firebase from "../../firebase";
 import Spiner from "../UI/Spiner";
+import EmptyContentMessage from './EmptyContentMessage';
 class ContentPane extends Component {
   state = {
     worksRef: firebase.database().ref("works"),
@@ -11,6 +12,7 @@ class ContentPane extends Component {
     todoWorks: [],
     loading: true,
     doneWorks: [],
+    hasWork: true,
   };
 
   componentDidMount() {
@@ -32,6 +34,18 @@ class ContentPane extends Component {
 
       this.retrieveWorks(snap.val(), snap.key, todoWorks, doneWorks);
     });
+    worksRef.child(workDateId).once("value", (snap) => {
+      if (snap.numChildren() === 0) {
+        this.setState({
+          hasWork: false,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          hasWork: true,
+        });
+      }
+    });
   };
 
   retrieveWorks = (work, key, todoWorks, doneWorks) => {
@@ -52,12 +66,11 @@ class ContentPane extends Component {
   };
 
   render() {
-    const { loading, workDateId, todoWorks, doneWorks } = this.state;
+    const { loading, workDateId, todoWorks, doneWorks, hasWork } = this.state;
     return (
       <>
-        {loading ? (
-          <Spiner />
-        ) : (
+        {loading && <Spiner />}
+        {hasWork && (
           <Grid>
             <Grid.Column width="8">
               {/*  */}
@@ -77,6 +90,8 @@ class ContentPane extends Component {
             </Grid.Column>
           </Grid>
         )}
+        {!hasWork && (<EmptyContentMessage workDate={this.props.workDate}/>)}
+      
       </>
     );
   }

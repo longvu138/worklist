@@ -12,7 +12,7 @@ import {
 import {
   setWorkDate,
   setWorkDateData,
-  refreshWordDateDataId,
+  refreshWorkDateDataId,
 } from "../../redux/workdates/workdateAction";
 import firebase from "../../firebase";
 
@@ -76,7 +76,7 @@ class TopHeaderPane extends Component {
       .then(() => {
         console.log("save work");
         this.closeModal();
-        this.props.refreshWordDateDataId(Math.random());
+        this.props.refreshWorkDateDataId(Math.random());
       })
       .catch((err) => {
         console.log(err);
@@ -153,7 +153,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = (dispatch) => ({
   setWorkDate: (workDate) => dispatch(setWorkDate(workDate)),
   setWorkDateData: (data) => dispatch(setWorkDateData(data)),
-  refreshWordDateDataId: (id) => dispatch(refreshWordDateDataId(id)),
+  refreshWorkDateDataId: (id) => dispatch(refreshWorkDateDataId(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopHeaderPane);

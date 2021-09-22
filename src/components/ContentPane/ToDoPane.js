@@ -1,10 +1,51 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Divider, Header, Icon, Segment, Button } from "semantic-ui-react";
-import { refreshWordDateDataId } from "../../redux/workdates/workdateAction";
+import { refreshWorkDateDataId } from "../../redux/workdates/workdateAction";
+import firebase from "../../firebase";
+
 class ToDoPane extends Component {
-  handleDeleteWork = (work) => {};
-  handleUpdateStatus = (work) => {};
+  state = {
+    workRef: firebase.database().ref("works"),
+  };
+
+  handleDeleteWork = (work) => {
+    const { workRef } = this.state;
+    const { workDateId } = this.props;
+
+    workRef
+      .child(workDateId)
+      .child(work.id)
+      .remove()
+      .then(() => {
+        this.props.refreshWorkDateDataId(Math.random());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  handleUpdateStatus = (work) => {
+    const { workRef } = this.state;
+    const { workDateId, refreshWorkDateDataId } = this.props;
+
+    workRef
+      .child(workDateId)
+      .child(work.id)
+      .update({
+        name: work.name,
+        status: "DONE",
+        timestamp: firebase.database.ServerValue.TIMESTAMP,
+      })
+      .then((updatedWork) => {
+        console.log(updatedWork);
+        refreshWorkDateDataId(Math.random());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     const { todoWorks } = this.props;
     return (
@@ -16,9 +57,9 @@ class ToDoPane extends Component {
         <Divider />
         {todoWorks &&
           todoWorks.length > 0 &&
-          todoWorks.map((item,index) => {
+          todoWorks.map((item, index) => {
             return (
-              <Segment key={index} attached clearing>
+              <Segment key={item.id} attached clearing>
                 {item.name}
                 <Button
                   icon="trash alternate"
@@ -45,7 +86,7 @@ class ToDoPane extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  refreshWorkDateDataId: (id) => dispatch(refreshWordDateDataId(id)),
+  refreshWorkDateDataId: (id) => dispatch(refreshWorkDateDataId(id)),
 });
 
-export default connect(mapDispatchToProps)(ToDoPane);
+export default connect(null, mapDispatchToProps)(ToDoPane);
