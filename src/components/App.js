@@ -6,6 +6,8 @@ import firebase from "../firebase";
 import { clearUser, setUser } from "../redux/users/userActions";
 import { connect } from "react-redux";
 import TopHeaderPane from "./TopPane/TopHeaderPane";
+import ContentPane from "./ContentPane/ContentPane";
+import EmptyContentMessage from "./ContentPane/EmptyContentMessage";
 class App extends Component {
   handleSignOut = () => {
     firebase
@@ -17,6 +19,7 @@ class App extends Component {
   };
 
   render() {
+    const { workDate, workDateData, refreshWordDateDataId } = this.props;
     return (
       <Grid stretched stackable style={{ background: "#eee" }}>
         <Grid.Column width="4">
@@ -28,9 +31,19 @@ class App extends Component {
           <Grid>
             <Grid.Column width="16">
               <Grid.Row>
-               <TopHeaderPane/>
+                <TopHeaderPane />
               </Grid.Row>
               <Divider />
+              <Grid.Row>
+                {this.props.workDateData ? (
+                  <ContentPane
+                    key={`${workDateData.id}${refreshWordDateDataId}`}
+                    workDateId= {workDateData.id}
+                  />
+                ) : (
+                  <EmptyContentMessage key={workDate} workDate={workDate} />
+                )}
+              </Grid.Row>
             </Grid.Column>
           </Grid>
         </Grid.Column>
@@ -40,7 +53,13 @@ class App extends Component {
 }
 
 // kết nối tới redux store
-const mapStateToProps = ({ users: { loading } }) => ({});
+const mapStateToProps = ({
+  users: { loading },
+  workDates: { workDate, workDateData },
+}) => ({
+  workDate: workDate,
+  workDateData,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   setUser: (user) => dispatch(setUser(user)),
