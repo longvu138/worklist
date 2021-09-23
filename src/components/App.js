@@ -7,7 +7,6 @@ import { clearUser, setUser } from "../redux/users/userActions";
 import { connect } from "react-redux";
 import TopHeaderPane from "./TopPane/TopHeaderPane";
 import ContentPane from "./ContentPane/ContentPane";
-import EmptyContentMessage from "./ContentPane/EmptyContentMessage";
 class App extends Component {
   handleSignOut = () => {
     firebase
@@ -31,7 +30,7 @@ class App extends Component {
           <Grid>
             <Grid.Column width="16">
               <Grid.Row>
-                <TopHeaderPane />
+               <TopHeaderPane/>
               </Grid.Row>
               <Divider />
               <Grid.Row>
